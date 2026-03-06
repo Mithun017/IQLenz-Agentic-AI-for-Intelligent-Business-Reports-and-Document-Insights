@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo:latest
+    container_name: iqlenz_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iqlenz_backend
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=mongodb://root:password@db:27017
+      # Ensure you securely inject this or define it in a local .env file when building
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: iqlenz_frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      # Exclude node_modules from local overriding container node_modules
+      - /app/node_modules
+
+volumes:
+  mongodb_data:
