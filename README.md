@@ -4,6 +4,13 @@ IQLenz is a full-stack, AI-driven business platform designed to ingest financial
 
 ---
 
+## 🌐 Live Demo
+
+You can view the fully deployed and functioning application live at:
+**[https://iqlenz-agentic-ai.vercel.app/](https://iqlenz-agentic-ai.vercel.app/)**
+
+---
+
 ## 🚀 Features
 
 * **Multi-Agent Intelligence Backend**: Dedicated Python agents extract fields, analyze data, construct reports, and derive strategic proposals independently.
